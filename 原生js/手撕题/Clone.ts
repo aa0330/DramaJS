@@ -1,3 +1,5 @@
+//  number string boolean undefined null bigInt symbol  object
+
 let obj = {
     name: 'jack',
     fn() {
@@ -5,6 +7,17 @@ let obj = {
 
     }
 }
+
+
+function shallowClone<T>(data: T): T {
+    if (typeof data !== 'object') return data;
+
+
+
+
+    return data
+}
+
 
 
 function deepClone<T>(data: T): T {
@@ -28,3 +41,5 @@ function deepClone<T>(data: T): T {
 
 let obj2 = deepClone(obj)
 obj.name = 'Tom'
+
+console.log(typeof null);
