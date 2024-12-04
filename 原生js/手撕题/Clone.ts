@@ -10,11 +10,13 @@ let obj = {
 
 
 function shallowClone<T>(data: T): T {
-    if (typeof data !== 'object') return data;
+    if (typeof data !== 'object' || data === null) return data;
+    let temData;
+    if (Array.isArray(data)) {
+        
+    } else {
 
-
-
-
+    }
     return data
 }
 
@@ -32,7 +34,6 @@ function deepClone<T>(data: T): T {
             } else {
                 newData[ele] = data[ele]
             }
-
         }
     }
     return newData
