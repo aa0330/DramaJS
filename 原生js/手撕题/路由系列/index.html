@@ -11,4 +11,12 @@
     <a href="#home">home</a>
     <a href="#mine">mine</a>
   </body>
+  <script>
+    var name = "THIS";
+    function testFun() {
+      var name = "hello this!";
+      console.log(this.name);
+    }
+    testFun();
+  </script>
 </html>
