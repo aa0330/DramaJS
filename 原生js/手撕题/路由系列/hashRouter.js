@@ -37,23 +37,22 @@ HashRouter.prototype.load();
 
 class Cat {
   constructor(name) {
-    this.name = name
+    this.name = name;
   }
   jump() {
-    console.log('jump', this)
+    console.log("jump", this);
   }
   static go() {
-    console.log(this)
+    console.log(this);
   }
 }
-Cat.drink = function() {
-  console.log('drink', this)
-}
-Cat.prototype.eat = function() {
-  console.log('eat', this)
-}
+Cat.drink = function () {
+  console.log("drink", this);
+};
+Cat.prototype.eat = function () {
+  console.log("eat", this);
+};
 Cat.prototype.walk = () => {
-  console.log('walk', this)
-}
-let cat = new Cat('豆芽')
-console.log(cat);
+  console.log("walk", this);
+};
+let cat = new Cat("豆芽");
