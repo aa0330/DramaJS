@@ -1,28 +1,41 @@
-/**
- * 二叉树:
- *      好像只有搜索二叉树才有意义，普通的二叉树该如何整
- * 
- */
-
+// 搜索二叉树
 class Node {
     constructor(value) {
         this.value = value;
         this.left = this.right = null;
     }
-
 }
+
 class createTree {
-    constructor(val) {
-        this.root = new Node(val);
-        this.curNode = this.root;
-        this.size = 1;
+    constructor(...values) {
+        this.root = null;
+        this.size = values.length;
+        for (let val of values) {
+            this.inserNode(val)
+        }
     }
-    insertLeftNode(val) {
-        this.curNode.left = new Node(val)
+    inserNode(val, curNode = this.root) {
+        if (curNode) {
+            if (curNode.value >= val) {
+                if (curNode.left) {
+                    this.inserNode(val, curNode.left)
+                } else {
+                    curNode.left = new Node(val)
+                }
+            } else {
+                if (curNode.right) {
+                    this.inserNode(val, curNode.right)
+                } else {
+                    curNode.right = new Node(val)
+                }
+            }
+        } else {
+            this.root = new Node(val)
+        }
     }
-    insertLeftNode(val) {
-        this.curNode.right = new Node(val)
-    }
-
 }
 
+
+let nums = [9, 5, 10, 15, 4, 3, 9, 11, 14, 15]
+let tree = new createTree(8, 1, 3, 1, 9, 5, 10, 15, 4, 3, 9, 11, 14, 15)
+console.log(tree);
