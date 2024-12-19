@@ -45,14 +45,14 @@ class HashRouter {
   addBeforEach(fn) {
     if (typeof fn !== "function") return;
     this.beforEacf = (oldHash, newHash) => {
-      let res = fn(oldHash, newHash);
-      console.log("路由前置守卫返回");
-
+      const res = fn(oldHash, newHash);
+      console.log("路由前置守卫跳转", res ? "通过✅" : "不通过❌");
       return res;
     };
   }
 
   load(HashChangeEvent) {
+    // 前置守卫
     if (this.passNot) {
       this.passNot = false;
       return;
@@ -61,13 +61,20 @@ class HashRouter {
       const oldHash = HashChangeEvent.oldURL?.split("#")[1];
       const newHash = HashChangeEvent.newURL?.split("#")[1];
       const isPass = this.beforEacf(oldHash, newHash) === false ? false : true;
-      console.log(this.beforEacf(oldHash, newHash));
       if (!isPass) {
         this.passNot = true;
         this.prevPath = oldHash;
         location.hash = oldHash;
       }
     }
+
+    // 路由 处理逻辑
+    let 
+
+
+    // 后置守卫
+
+    
   }
 }
 
@@ -86,7 +93,6 @@ router.initRoutes({
 });
 
 router.addBeforEach((from, to) => {
-  console.log("成功🏆！", from, to);
   if (to === "mine") return false;
   return true;
 });

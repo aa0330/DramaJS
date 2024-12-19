@@ -5,11 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script defer src="./hashRouter.js"></script>
     <title>hash模式</title>
+    <style>
+      #container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 30px;
+      }
+      a {
+        margin: 0 20px;
+      }
+    </style>
   </head>
   <body>
-    <div id="container"></div>
-    <a href="#home">home</a>
-    <a href="#mine">mine</a>
-    <a href="#test">test</a>
+    <div id="container">
+      <a href="#home">home</a>
+      <a href="#test">test</a>
+      <a href="#mine">mine</a>
+    </div>
   </body>
 </html>
