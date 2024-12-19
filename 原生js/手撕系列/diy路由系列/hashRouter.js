@@ -22,6 +22,8 @@ class HashRouter {
   constructor() {
     this.routes = {};
     this.beforEacf = null;
+    this.prevPath = "";
+    this.passNot = false;
     window.addEventListener("hashchange", this.load.bind(this), false);
   }
 
@@ -43,18 +45,28 @@ class HashRouter {
   addBeforEach(fn) {
     if (typeof fn !== "function") return;
     this.beforEacf = (oldHash, newHash) => {
-      console.log("前置路由");
-      fn(oldHash, newHash);
+      let res = fn(oldHash, newHash);
+      console.log("路由前置守卫返回");
+
+      return res;
     };
   }
 
   load(HashChangeEvent) {
-    const hash = location.hash;
-    const oldHash = HashChangeEvent.oldURL?.split("#")[1];
-    const newHash = HashChangeEvent.newURL?.split("#")[1];
+    if (this.passNot) {
+      this.passNot = false;
+      return;
+    }
     if (this.beforEacf) {
-      this.beforEacf(oldHash, newHash);
-      // location.hash = oldHash;
+      const oldHash = HashChangeEvent.oldURL?.split("#")[1];
+      const newHash = HashChangeEvent.newURL?.split("#")[1];
+      const isPass = this.beforEacf(oldHash, newHash) === false ? false : true;
+      console.log(this.beforEacf(oldHash, newHash));
+      if (!isPass) {
+        this.passNot = true;
+        this.prevPath = oldHash;
+        location.hash = oldHash;
+      }
     }
   }
 }
@@ -68,8 +80,13 @@ router.initRoutes({
   mine: () => {
     console.log("mine");
   },
+  test: () => {
+    console.log("test");
+  },
 });
 
-router.addBeforEach(() => {
-  console.log("成功🏆！");
+router.addBeforEach((from, to) => {
+  console.log("成功🏆！", from, to);
+  if (to === "mine") return false;
+  return true;
 });
