@@ -6,22 +6,22 @@
  *      constructor传入路由数据进行初始化 或者  写个init函数
  *
  *  动态路由：
- *      增加或者删除路由表
+ *      动态的增加或者删除路由
  *
  *  路由守卫：
  *      前置路由守卫：真正的代码逻辑执行前调用，
  *      后置路由守卫：逻辑代码执行之后进行调用
  *
+ *
  *  路由传参：
  *      借助第三方库或者自己截取+匹配参数
- *
- *
  */
 
 class HashRouter {
   constructor() {
     this.routes = {};
-    this.beforEacf = null;
+    this.beforEach = null;
+    this.afterEach = null;
     this.prevPath = "";
     this.passNot = false;
     window.addEventListener("hashchange", this.load.bind(this), false);
@@ -32,9 +32,10 @@ class HashRouter {
     this.routes = routeObj;
   }
 
-  addRoute(hash = "", fn = () => {}) {
-    if (typeof path !== "string" || typeof fn !== "function") return;
-    this.routes[hash] = fn;
+  addRoute(path, fn) {
+    if (typeof path === "string" && typeof fn === "function") {
+      this.routes[path] = fn;
+    }
   }
 
   removeRoute(path) {
@@ -44,10 +45,18 @@ class HashRouter {
 
   addBeforEach(fn) {
     if (typeof fn !== "function") return;
-    this.beforEacf = (oldHash, newHash) => {
-      const res = fn(oldHash, newHash);
+    let routerList = Object.keys(this.routes);
+    this.beforEach = (oldHash, newHash) => {
+      const res = fn(oldHash, newHash, routerList);
       console.log("路由前置守卫跳转", res ? "通过✅" : "不通过❌");
       return res;
+    };
+  }
+
+  addAfterEach(fn) {
+    if (typeof fn !== "function") return;
+    this.afterEach = (oldHash, newHash) => {
+      fn(oldHash, newHash);
     };
   }
 
@@ -57,24 +66,30 @@ class HashRouter {
       this.passNot = false;
       return;
     }
-    if (this.beforEacf) {
-      const oldHash = HashChangeEvent.oldURL?.split("#")[1];
-      const newHash = HashChangeEvent.newURL?.split("#")[1];
-      const isPass = this.beforEacf(oldHash, newHash) === false ? false : true;
+    const oldHash = HashChangeEvent.oldURL?.split("#")[1];
+    const newHash = HashChangeEvent.newURL?.split("#")[1];
+    if (this.beforEach) {
+      const isPass = this.beforEach(oldHash, newHash) === false ? false : true;
       if (!isPass) {
         this.passNot = true;
         this.prevPath = oldHash;
         location.hash = oldHash;
+        return;
       }
     }
 
     // 路由 处理逻辑
-    let 
-
+    if (this.routes[newHash]) {
+      // 此处可以多增加一些
+      this.routes[newHash]();
+    } else {
+      console.log("没有找到路由🙅---404");
+    }
 
     // 后置守卫
-
-
+    if (this.afterEach) {
+      this.afterEach(oldHash, newHash);
+    }
   }
 }
 
@@ -92,7 +107,23 @@ router.initRoutes({
   },
 });
 
-router.addBeforEach((from, to) => {
+// 路由前置守卫
+router.addBeforEach((from, to, routerList) => {
   if (to === "mine") return false;
   return true;
 });
+
+//路由后置守卫
+router.addAfterEach((from, to) => {
+  if (to == "test") {
+    document.title = "测试 Hash模式";
+  } else {
+    document.title = "HashRouter";
+  }
+});
+
+// router.addRoute("aaa", () => {
+//   console.log("aaa添加成功");
+// });
+
+// router.removeRoute('aaa')
