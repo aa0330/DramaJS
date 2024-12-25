@@ -1,15 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script>
-      fetch("http://localhost:3000/info")
-        .then((res) => res.json())
-        .then((res) => console.log(res));
-    </script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    fetch("http://localhost:3000/info", {
+      method: "get",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => {
+        const headers = res.headers;
+        console.log(headers.get('wangchi'));
+
+        return res.json()
+      })
+      .then((res) => console.log(res));
+
+
+
+    const sse = new EventSource('http://localhost:3000/sse')
+
+    sse.addEventListener('message', (e) => {
+      console.log(e.data);
+      
+    })
+
+    sse.addEventListener('error', (e) => {
+      console.log('err', e);
+    })
+
+  </script>
+</body>
+
 </html>
