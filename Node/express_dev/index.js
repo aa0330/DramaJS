@@ -1,43 +1,56 @@
-import express from "express";
+import mysql2 from 'mysql2/promise'
+import fs from 'node:fs'
+import jsyaml from 'js-yaml'
+import express from 'express'
 
-const app = express();
+const yaml = fs.readFileSync('./db.config.yaml', 'utf8')
+const config = jsyaml.load(yaml)
 
-app.use("*", (req, res, next) => {
+const sql = await mysql2.createConnection({
+  ...config.db
+})
+const app = express()
 
-  // * 允许所有资源访问
-  res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500")  // '*' | Origin
+// express 不支持 
+app.use(express.json())
 
-  // 默认支持 GET、POST 其他不支持
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,PATCH')
-
-  // 默认支持  Content-type: application/x-www-form-urlencoded | multipart/form-data | text/plain
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-
-  next();
-});
-
-app.get("/info", (req, res) => {
-  res.set('wangchi', 12345)
-  res.setHeader('Access-Control-Expose-Headers', 'wangchi')
-  res.json({
-    code: 200,
-    type: "get",
-  });
-});
-
-app.get('/sse', (req, res) => {
-
-  // SSE 单工通讯
-  res.setHeader('Content-Type', 'text/event-stream')
-
-  setInterval(() => {
-    res.write('event:test\n')
-    res.write('data:' + Date.now() + '\n\n')
-  }, 1000)
-
-
+//查询接口 全部
+app.get('/', async (req, res) => {
+  const [data] = await sql.query('select * from sys_user')
+  res.send(data)
 })
 
-app.listen(3000, () => {
-  console.log("http://localhost:3000");
-});
+// 查询单个  params 
+app.get('/user/:id', async (req, res) => {
+  const [data] = await sql.query(`select * from user_sys where id = ${req.params.id}`)
+  // const [data] = await sql.query(`select * from user_sys where id = ?` [req.params.id])
+  res.send(data)
+})
+
+// 新增接口
+app.post('/create', async (req, res) => {
+  const { user_name, age } = req.body;
+  const operateRes = await sql.query('insert into sys_user(user_name,age) values(?,?)', [user_name, age])
+  console.log(111, operateRes);
+  res.send({ code: 200, message: '插入成功' })
+})
+
+// 编辑
+app.post('/update', async (req, res) => {
+  const { id, userName, age } = req.body
+  await sql.query('update  sys_user set user_name = ? ,age = ?  where id = ?', [userName, age, id]);
+  res.send({ code: 200, ok: 1 })
+})
+
+// 删除
+app.post('/delete', async (req, res) => {
+  await sql.query(`delete from sys_user where id = ${req.body.id}`);
+  res.send({ code: 200 })
+})
+
+
+const port = 3000
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
