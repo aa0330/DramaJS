@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id="file" type="file">
+    <script>
+        const file = document.querySelector('#file')
+        const chunksFun = (file, size = 1024 * 1024 * 1) => {
+            const chunks = [];
+            for (let i = 0; i < file.size; i += size) {
+                chunks.push(file.slice(i, i + size))
+            }
+            return chunks;
+        }
+
+        const uploadFiles = (chunks, fileName) => {
+            // 1、批量上传时 使用promise.all([])来保证所有promise都lock-in
+            // 2、formData 方式去上传 file 标识 hash index 
+            const list = []
+            for (let i = 0; i < chunks.length; i++) {
+                const formData = new FormData();
+                formData.append('index', i);
+                formData.append('filename', fileName);
+                formData.append('file', chunks[i])
+                list.push(fetch('http://localhost:3000/upload', {
+                    method: 'POST',
+                    body: formData
+                }))
+            }
+            Promise.all(list).then(res => {
+                fetch('http://127.0.0.1:3000/merge', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({
+                        fileName:'小满'
+                    })
+                })
+                console.log('上传成功');
+            })
+        }
+
+        file.addEventListener('change', (e) => {
+            let file = e.target.files[0];
+            const chunks = chunksFun(file);
+            uploadFiles(chunks, file.name)
+
+        })
+    </script>
+</body>
+
+</html>

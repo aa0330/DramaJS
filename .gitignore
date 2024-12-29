@@ -2,4 +2,8 @@
 /test.html
 Node/express_dev/node_modules/
 Node/schedule/node_modules/
+Node/大文件上传/node_modules/
+Node/大文件上传/小满.mp4
+Node/大文件上传/upload/
+Node/大文件上传/video/
 Node/express_dev/db.config.yaml
