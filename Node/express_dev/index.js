@@ -29,9 +29,8 @@ app.get('/user/:id', async (req, res) => {
 
 // 新增接口
 app.post('/create', async (req, res) => {
-  const { user_name, age } = req.body;
-  const operateRes = await sql.query('insert into sys_user(user_name,age) values(?,?)', [user_name, age])
-  console.log(111, operateRes);
+  const { name, age, hobby } = req.body;
+  await sql.query('insert into sys_user(name,age,hobby) values(?,?,?)', [name, age, hobby])
   res.send({ code: 200, message: '插入成功' })
 })
 

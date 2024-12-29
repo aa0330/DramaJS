@@ -4,13 +4,14 @@
 # 单个查询
 # GET http://localhost:3000/user/888 HTTP/1.1
 
-# 添加数据
+# # 添加数据
 # POST http://localhost:3000/create HTTP/1.1
 # Content-Type: application/json
 
 # {
-#     "user_name":"李四",
-#     "age":20
+#     "name":"大满",
+#     "age":22,
+#     "hobby": "飞机大战美女"
 # }
 
 
@@ -25,10 +26,39 @@
 # }
  
 # 修改数据
+# POST http://localhost:3000/delete HTTP/1.1
+# Content-Type: application/json
+
+# {
+#     "id": 5
+# }
+
+
+
+
+# knex
+
+# 查询全部
+# GET http://localhost:3000/ HTTP/1.1
+
+
+
+# 更新数据
+# POST http://localhost:3000/update HTTP/1.1
+# Content-Type: application/json
+
+# {
+#     "id":1,
+#     "name":"中满",
+#     "age":20,
+#     "hobby": "飞机大战记牢"
+# }
+
+# 删除单条数据
 POST http://localhost:3000/delete HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 5
+    "id":1
 }
  
