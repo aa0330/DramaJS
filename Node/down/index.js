@@ -8,7 +8,7 @@ const app = new express();
 app.use(cors())
 app.use(express.json())
 
-app.post('/down', (req, res) => {
+app.post('/download', (req, res) => {
     const fileName = req.body.fileName;
     const filePath = path.join(process.cwd(), 'static', fileName)
     const content = fs.readFileSync(filePath)
