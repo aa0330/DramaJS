@@ -9,3 +9,5 @@ Node/大文件上传/video/
 Node/down/node_modules/
 Node/down/static/
 Node/express_dev/db.config.yaml
+原生js/.DS_Store
+.DS_Store
