@@ -7,6 +7,8 @@ Node/大文件上传/小满.mp4
 Node/大文件上传/upload/
 Node/大文件上传/video/
 Node/down/node_modules/
+Node/http_cache/node_modules/
+Node/http_cache/static/
 Node/down/static/
 Node/express_dev/db.config.yaml
 原生js/.DS_Store
