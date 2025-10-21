@@ -24,7 +24,6 @@
         display: flex;
         width: 100%;
         height: 6px;
-
         background: #aaaaaa;
         border-radius: 3px;
         transition: width 0.1s ease;
@@ -40,7 +39,7 @@
         top: 0;
         left: 0;
         height: 100%;
-        background: rgb(197, 197, 197);
+        background: rgb(251, 65, 65);
         border-radius: 3px;
         transition: width 0.1s ease;
       }
@@ -193,15 +192,8 @@
       <span class="time-total" id="totalTime">10:30</span>
     </div>
     <script>
-      const doms = [
-        "progressContainer",
-        "progressBar",
-        "progressHandle",
-        "currentTime",
-        "totalTime",
-      ];
-      const progressContainer = document.getElementById("progressContainer");
       const progressBar = document.getElementById("progressBar");
+      const progressContainer = document.getElementById("progressContainer");
       const progressHandle = document.getElementById("progressHandle");
       const currentTime = document.getElementById("currentTime");
       const totalTime = document.getElementById("totalTime");
@@ -213,32 +205,51 @@
 
       let isDragging = false;
 
-      const drag = (e) => {
+      const handelDrag = (e) => {
         e.preventDefault();
         if (!isDragging) return;
-        const curRect = progressHandle.getBoundingClientRect();
-        const clickX = e.clientX - curRect.left;
-        const percentage = clickX / curRect.width;
-        progressBar.style.left = `${percentage * 100}%`;
-        progressHandle.style.left = `${clickX}px`;
-        console.log(222, clickX, percentage);
+        console.log(e.clientX);
+        const pointX = e.clientX > 20 ? e.clientX - 20 : -6;
+        progressHandle.style.left = `${pointX}px`;
+
+        // const curRect = progressHandle.getBoundingClientRect();
+        // const clickX = e.clientX - curRect.left + 12;
+        // console.log(222, e.clientX, clickX);
+        // const percentage = clickX / curRect.width;
+        // progressBar.style.left = `${percentage * 100}%`;
       };
 
       const endDrag = (e) => {
         e.preventDefault();
       };
 
+      //  跳转播放
+      const handelClickJump = (e) => {
+        e.preventDefault();
+        const pointX = e.clientX > 20 ? e.clientX - 20 : -6;
+        progressHandle.style.left = `${pointX}px`;
+        const curBarProgress = 10;
+        progressBar.style.width = `${curBarProgress}%`;
+      };
+
       progressHandle.addEventListener("mousedown", (e) => {
         startDrag(e);
         isDragging = true;
+        document.addEventListener("mousemove", handelDrag, true);
       });
 
-      progressHandle.addEventListener("mousemove", (e) => {
-        drag(e);
+      progressContainer.addEventListener("mousemove", (e) => {
+        handelDrag(e);
       });
 
-      progressHandle.addEventListener("mouseup", (e) => {
+      progressContainer.addEventListener("click", handelClickJump);
+
+      document.addEventListener("mouseup", (e) => {
         endDrag(e);
+        if (isDragging) {
+          document.removeEventListener("mousemove", handelDrag, true);
+        }
+        progressHandle.classList.remove("dragging");
         isDragging = false;
       });
     </script>
