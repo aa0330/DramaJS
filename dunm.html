@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>弹幕</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+      }
+
+      .barrage-container {
+        width: 720px;
+        height: 540px;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        /* overflow: hidden; */
+      }
+
+      .danmu-list-container {
+        width: 300px;
+        height: 540px;
+        margin-left: 20px;
+        background-color: #f0f0f0;
+        overflow: hidden;
+        padding: 12px;
+        border-radius: 8px;
+      }
+
+      .danmu-item {
+        position: relative;
+        animation: danmu-item-move 8s linear infinite;
+        animation-iteration-count: 1;
+      }
+
+      .danmu-item:hover {
+        animation-play-state: paused;
+      }
+
+      @keyframes danmu-item-move {
+        0% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(0%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container" class="container">
+      <div id="barrage-container" class="barrage-container">
+        <div id="screen-danmu-list">
+          <div class="danmu-item">111</div>
+        </div>
+      </div>
+      <div id="danmu-list-container" class="danmu-list-container">
+        <div id="danmu-list"></div>
+      </div>
+    </div>
+    <script>
+      class Barrage {
+        constructor(text, color, size, position) {
+          this.text = text;
+          this.color = color;
+          this.size = size;
+          this.position = position;
+        }
+      }
+      const barrageContainer = document.getElementById("barrage-container");
+      const danmuList = document.getElementById("danmu-list");
+      const screenDanmuList = document.getElementById("screen-danmu-list");
+
+      const barrageList = [
+        {
+          index: 0,
+          startTime: "00:00:00:306",
+          endTime: "00:00:00:844",
+          duration: 0.538,
+          text: "Hello, world!11",
+          color: "red",
+          size: 16,
+          position: "top",
+          sendTime: "2025-10-28 10:01:23",
+        },
+        {
+          index: 1,
+          startTime: "00:00:01:306",
+          endTime: "00:00:01:844",
+          duration: 0.538,
+          text: "你好世界",
+          color: "red",
+          size: 16,
+          position: "normal",
+          time: "",
+          sendTime: "2025-10-28 10:34:23",
+        },
+        {
+          index: 2,
+          startTime: "00:00:03:306",
+          endTime: "00:00:03:844",
+          duration: 0.538,
+          text: "你好世界",
+          color: "red",
+          size: 16,
+          position: "normal",
+          time: "",
+          sendTime: "2025-10-28 12:01:23",
+        },
+        {
+          index: 3,
+          startTime: "00:00:04:306",
+          endTime: "00:00:04:844",
+          duration: 0.538,
+          text: "弹幕💣",
+          color: "red",
+          size: 16,
+          position: "normal",
+          time: "",
+          sendTime: "2025-10-28 14:01:23",
+        },
+      ];
+
+      barrageList.forEach((ele) => {
+        const danmuItem = document.createElement("div");
+        danmuItem.style.color = ele.color;
+
+        danmuItem.textContent = ele.text;
+        screenDanmuList.appendChild(danmuItem);
+        setTimeout(() => {
+          screenDanmuList.removeChild(danmuItem);
+        }, ele.duration);
+      });
+
+      barrageList.forEach((ele) => {
+        const danmuItem = document.createElement("div");
+        danmuItem.textContent = ele.text;
+        danmuList.appendChild(danmuItem);
+      });
+    </script>
+  </body>
+</html>

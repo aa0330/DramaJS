@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #image-container {
+        width: 800px;
+        height: 450px;
+        position: relative;
+      }
+
+      #image-container img {
+        width: 100%;
+        height: 100%;
+      }
+
+      .bpx-player-control-wrap {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+      }
+
+      .controls-wrapper {
+        width: 100%;
+        height: 20px;
+        background-color: rgba(215, 215, 215, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="image-container">
+      <img src="./DramaPlayer/cover.png" alt="" />
+      <div id="barrage-container" class="bpx-player-control-wrap">
+        <div id="list-container" class="controls-wrapper"></div>
+      </div>
+    </div>
+    <script>
+      const imageContainer = document.getElementById("image-container");
+      const img = document.querySelector("#image-container img");
+      const barrageContainer = document.getElementById("barrage-container");
+      imageContainer.addEventListener("mouseenter", (e) => {
+        barrageContainer.style.opacity = "1";
+      });
+      imageContainer.addEventListener("mouseleave", (e) => {
+        barrageContainer.style.opacity = "0";
+      });
+    </script>
+  </body>
+</html>
