@@ -3,94 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>drama Player1</title>
+    <title>drama Player</title>
     <script type="module" src="./index.js"></script>
     <style>
       * {
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
       }
 
       .play-box {
         width: 800px;
         position: absolute;
-        top: 40%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-      }
-
-      .dplayer {
-        position: relative;
-        z-index: 1;
-        user-select: none;
-        aspect-ratio: 16 / 9;
         border-radius: 8px;
         overflow: hidden;
-      }
-
-      .cover-img,
-      video {
-        width: 100%;
-        height: 100%;
+        background-color: rgb(223, 223, 223);
       }
     </style>
   </head>
 
   <body>
     <div class="play-box">
-      <div id="dplayer" class="dplayer hover">
-        <div id="cover-img" class="image-container">
-          <img class="cover-img" src="./cover.png" alt="cover-img" />
-        </div>
-        <video id="video" class="video" src="./normal.mp4"></video>
-      </div>
+      <drama-player
+        posterUrl="./cover.png"
+        src="./normal.mp4"
+        pauseIconSvg='<svg
+        t="1761724703483"
+        class="icon"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="10652"
+        width="200"
+        height="200"
+      >
+        <path
+          d="M512.006827 0a495.28832 495.28832 0 0 0-494.933334 494.933333v477.866667a52.497067 52.497067 0 0 0 51.2 51.2h68.266667a52.497067 52.497067 0 0 0 51.2-51.2v-34.133333a16.124587 16.124587 0 0 1 17.066667-17.066667h68.266666a16.124587 16.124587 0 0 1 17.066667 17.066667v34.133333a52.497067 52.497067 0 0 0 51.2 51.2h68.266667a52.497067 52.497067 0 0 0 51.2-51.2v-34.133333a16.124587 16.124587 0 0 1 17.066666-17.066667h68.266667a16.124587 16.124587 0 0 1 17.066667 17.066667v34.133333a52.497067 52.497067 0 0 0 51.2 51.2h68.266666a52.497067 52.497067 0 0 0 51.2-51.2v-34.133333a16.124587 16.124587 0 0 1 17.066667-17.066667h68.266667a16.124587 16.124587 0 0 1 17.066666 17.066667v34.133333a52.497067 52.497067 0 0 0 51.2 51.2h68.266667a52.497067 52.497067 0 0 0 51.2-51.2v-477.866667A495.28832 495.28832 0 0 0 512.006827 0z m-119.466667 395.946667a22.678187 22.678187 0 0 1-13.653333 17.066666 69.748053 69.748053 0 0 0-54.613334 68.266667 68.901547 68.901547 0 0 0 54.613334 64.853333 18.71872 18.71872 0 0 1 13.653333 20.48 102.912 102.912 0 0 1-102.4 81.92 100.570453 100.570453 0 0 1-102.4-102.4V341.333333a102.4 102.4 0 1 1 204.8 0v54.613334z m409.6 0a22.678187 22.678187 0 0 1-13.653333 17.066666 69.748053 69.748053 0 0 0-54.613334 68.266667 68.901547 68.901547 0 0 0 54.613334 64.853333 18.71872 18.71872 0 0 1 13.653333 20.48 102.912 102.912 0 0 1-102.4 81.92 100.570453 100.570453 0 0 1-102.4-102.4V341.333333a102.4 102.4 0 0 1 204.8 0v54.613334z"
+          opacity=".998"
+          p-id="10653"
+          fill="#dbdbdb"
+        ></path></svg
+      >'
+      />
     </div>
-    <div
-      class="1hover"
-      style="width: 100px; height: 100px; background-color: antiquewhite"
-    >
-      <div id="aaa">111111111</div>
-    </div>
-    <script>
-      const dramaVideo = document.getElementById("video");
-      const coverImg = document.getElementById("cover-img");
-      const dPlayer = document.getElementById("dplayer");
-      dPlayer.addEventListener("click", (e) => {
-        e.preventDefault();
-        coverImg.style.display = "none";
-        if (dramaVideo.paused) {
-          dramaVideo.play();
-        } else {
-          dramaVideo.pause();
-        }
-      });
 
-      dramaVideo.addEventListener("timeupdate", (e) => {
-        console.log(111, e);
-      });
-
-      //   coverImg.addEventListener("click", (e) => {
-      //     coverImg.style.display = "none";
-      //     dramaVideo.play();
-      //   });
-
-      // const hoverDom = document.getElementsByClassName('1hover')[0]
-      // const aaa = document.getElementById('aaa')
-      // console.log(hoverDom);
-
-      // hoverDom.addEventListener('mouseenter', (e) => {
-      //     console.log(2222);
-      //     aaa.style.display = 'none'
-      //     const timer = setTimeout(() => {
-      //         aaa.style.display = 'block'
-      //         clearTimeout(timer)
-      //     }, 1500)
-      // })
-
-      // hoverDom.addEventListener('mouseleave', (e) => {
-      //     console.log(2222);
-      //     aaa.style.display = 'block'
-      // })
-    </script>
+    <script src="./index.js" type="module"></script>
   </body>
 </html>

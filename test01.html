@@ -5,49 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      #image-container {
-        width: 800px;
-        height: 450px;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .drama-player {
         position: relative;
+        user-select: none;
+        aspect-ratio: 16 / 9;
+        border-radius: 8px;
+        overflow: hidden;
       }
 
-      #image-container img {
+      .cover-container {
         width: 100%;
         height: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        z-index: 2;
       }
 
-      .bpx-player-control-wrap {
+      .cover-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+      }
+
+      video {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        aspect-ratio: 16 / 9;
+      }
+
+      .video-player-wrapper {
+        width: 100%;
+        height: 100%;
         position: absolute;
         bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 40px;
+        z-index: 99;
+        overflow: hidden;
       }
 
-      .controls-wrapper {
+      .pause-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        right: 37px;
+        bottom: 68px;
+        z-index: 99;
+      }
+
+      .pause-icon-wrapper svg {
+        position: relative;
         width: 100%;
-        height: 20px;
-        background-color: rgba(215, 215, 215, 0.3);
+        height: 100%;
+        fill: #dbdbdb;
+        opacity: 0.7;
+        z-index: 99;
       }
     </style>
   </head>
   <body>
-    <div id="image-container">
-      <img src="./DramaPlayer/cover.png" alt="" />
-      <div id="barrage-container" class="bpx-player-control-wrap">
-        <div id="list-container" class="controls-wrapper"></div>
+    <div style="width: 800px">
+      <div id="drama-player" class="drama-player">
+        <div id="cover-container" class="cover-container">
+          <img src="./DramaPlayer/cover.png" alt="" />
+        </div>
+        <video id="video-player" src="./DramaPlayer/normal.mp4"></video>
+        <div id="video-player-wrapper" class="video-player-wrapper">
+          <div id="pause-icon-wrapper" class="pause-icon-wrapper">
+            <svg
+              t="1761724703483"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="10652"
+              width="200"
+              height="200"
+            >
+              <path
+                d="M512.006827 0a495.28832 495.28832 0 0 0-494.933334 494.933333v477.866667a52.497067 52.497067 0 0 0 51.2 51.2h68.266667a52.497067 52.497067 0 0 0 51.2-51.2v-34.133333a16.124587 16.124587 0 0 1 17.066667-17.066667h68.266666a16.124587 16.124587 0 0 1 17.066667 17.066667v34.133333a52.497067 52.497067 0 0 0 51.2 51.2h68.266667a52.497067 52.497067 0 0 0 51.2-51.2v-34.133333a16.124587 16.124587 0 0 1 17.066666-17.066667h68.266667a16.124587 16.124587 0 0 1 17.066667 17.066667v34.133333a52.497067 52.497067 0 0 0 51.2 51.2h68.266666a52.497067 52.497067 0 0 0 51.2-51.2v-34.133333a16.124587 16.124587 0 0 1 17.066667-17.066667h68.266667a16.124587 16.124587 0 0 1 17.066666 17.066667v34.133333a52.497067 52.497067 0 0 0 51.2 51.2h68.266667a52.497067 52.497067 0 0 0 51.2-51.2v-477.866667A495.28832 495.28832 0 0 0 512.006827 0z m-119.466667 395.946667a22.678187 22.678187 0 0 1-13.653333 17.066666 69.748053 69.748053 0 0 0-54.613334 68.266667 68.901547 68.901547 0 0 0 54.613334 64.853333 18.71872 18.71872 0 0 1 13.653333 20.48 102.912 102.912 0 0 1-102.4 81.92 100.570453 100.570453 0 0 1-102.4-102.4V341.333333a102.4 102.4 0 1 1 204.8 0v54.613334z m409.6 0a22.678187 22.678187 0 0 1-13.653333 17.066666 69.748053 69.748053 0 0 0-54.613334 68.266667 68.901547 68.901547 0 0 0 54.613334 64.853333 18.71872 18.71872 0 0 1 13.653333 20.48 102.912 102.912 0 0 1-102.4 81.92 100.570453 100.570453 0 0 1-102.4-102.4V341.333333a102.4 102.4 0 0 1 204.8 0v54.613334z"
+                opacity=".998"
+                p-id="10653"
+                fill="#dbdbdb"
+              ></path>
+            </svg>
+          </div>
+          <div id="control-wrapper" class="control-wrapper"></div>
+        </div>
       </div>
     </div>
-    <script>
-      const imageContainer = document.getElementById("image-container");
-      const img = document.querySelector("#image-container img");
-      const barrageContainer = document.getElementById("barrage-container");
-      imageContainer.addEventListener("mouseenter", (e) => {
-        barrageContainer.style.opacity = "1";
-      });
-      imageContainer.addEventListener("mouseleave", (e) => {
-        barrageContainer.style.opacity = "0";
-      });
-    </script>
   </body>
 </html>
