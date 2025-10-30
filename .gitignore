@@ -1,5 +1,5 @@
-/test.js
-/test.html
+# 屏蔽所有以test开头的文件
+test*
 Node/express_dev/node_modules/
 Node/schedule/node_modules/
 Node/大文件上传/node_modules/
