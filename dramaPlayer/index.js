@@ -1,7 +1,19 @@
-import "./lib/index.js";
+/***
+ * 抓马播放器组件
+ *
+ */
+import "./components/progressBar/index.js";
 
 class DramaPlayer extends HTMLElement {
   static observedAttributes = ["width"];
+
+  #doms = {
+    dramaPlayer: "#drama-player",
+    coverContainer: "#cover-container",
+    videoPlayer: "#video-player",
+    pauseIconWrapper: "#pause-icon-wrapper",
+    controlWrapper: "#control-wrapper",
+  };
 
   constructor(props) {
     super(props);
@@ -99,19 +111,13 @@ class DramaPlayer extends HTMLElement {
           ${this.pauseIconSvg}
         </div>
         <div id="control-wrapper" class="control-wrapper">
-        
+          <progress-bar></progress-bar>
         </div>
       </div>
     </div>
     `;
     this.appendChild(this.template.content);
-    const doms = [
-      "#drama-player",
-      "#cover-container",
-      "#video-player",
-      "#pause-icon-wrapper",
-      "#control-wrapper",
-    ];
+
     doms.forEach((dom) => {
       this.shadowRoot.querySelector(dom).addEventListener("click", () => {
         this.shadowRoot.querySelector(dom).style.display = "none";
